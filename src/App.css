@@ -1,0 +1,133 @@
+* {
+    background: #DCD6D8;
+    padding: 0;
+    margin: 0;
+}
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 35px;
+    font-size: 16px;
+    width: 90vh;
+    color: #0E0C0C;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: #F3F1F2;
+}
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 17px;
+    width: 17px;
+    background-color: #eee;
+    border-radius: 50%;
+    border: 2px solid #DF2060;
+}
+.container:hover input~.checkmark {
+    background-color: #ccc;
+}
+.todo-text{
+    background: #F3F1F2;
+}
+.todo-text.completed {
+  color: #C4BBBE;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked~.checkmark {
+    background-color: #ED759D;
+    border: 2px solid #ED759D;
+}
+input:checked {
+    text-decoration: line-through;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked~.checkmark:after {
+    display: block;
+}
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 4.5px;
+    top: 1px;
+    width: 5px;
+    height: 7.5px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.bts{
+    position: absolute;
+    right: 0;
+    border-style: none;
+    font-size: 16px;
+    background: #F3F1F2;
+    cursor: pointer;
+}
+.bts1 {
+    position: absolute;
+    right: 0;
+    border-style: none;
+    font-size: 16px;
+    background: #F3F1F2;
+    cursor: pointer;
+}
+.bts2 {
+    position: absolute;
+    right: 10vh;
+    border-style: none;
+    font-size: 16px;
+    background: #F3F1F2;cursor: pointer;
+}
+.bts:hover {
+    color: #df2060;
+}
+.bts1:hover {
+    color: #df2060;
+}
+.bts2:hover {
+    color: #df2060;
+}
+@media (max-width: 768px) {
+.container {
+    margin-top: 20px;
+    width: 35vh;
+    height: 20px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    }
+.todo-text {
+    left: 30px;
+    position: absolute;
+}
+.bts{
+    left: 35vh;
+
+}
+.bts1 {
+    left: 15vh;
+}
+.bts2 {
+    left: 10vh;
+}
+  }
