@@ -12,7 +12,11 @@ export interface RegisterData {
   password: string;
   [key: string]: unknown; // optional extra fields
 }
-
+export interface LoginData {
+  username: string;
+  password: string;
+  [key: string]: unknown; // optional extra fields
+}
 // Response returned by login or register API
 export interface AuthApiResponse {
   token: string;
