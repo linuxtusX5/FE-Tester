@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import { createContext, useContext, useState, useEffect } from "react";
-import { register as apiRegister } from "../services/api";
-import type { RegisterData, User } from "../types/authTypes";
+import { login as apiLogin, register as apiRegister } from "../services/api";
+import type { RegisterData, User, LoginData } from "../types/authTypes";
 
 interface AuthContextType {
   user: User | null;
   register: (data: RegisterData) => Promise<unknown>;
+  login: (data: LoginData) => Promise<unknown>;
   token: string | null;
   loading: boolean;
 }
@@ -36,6 +37,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(false);
   }, []);
 
+  const login = async (data: LoginData) => {
+    try {
+      const response = await apiLogin(data);
+      const { token, user } = response as { token: string; user: any };
+      if (!user || !user.id || !user.username || !user.email) {
+        throw new Error("Invalid user data from server");
+      }
+      const userData: User = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      };
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(userData));
+      setToken(token);
+      setUser(userData);
+      return response;
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Registration failed";
+      throw new Error(errorMessage);
+    }
+  };
+
   const register = async (data: RegisterData) => {
     try {
       const response = await apiRegister(data);
@@ -61,6 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     token,
     register,
+    login,
     loading,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
