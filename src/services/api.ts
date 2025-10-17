@@ -70,15 +70,27 @@ export async function fetchWithAuth<T = unknown>(
 }
 
 // ---- Auth ----
-export async function login(
-  username: string,
-  password: string
-): Promise<{ token: string; user: unknown }> {
-  const response = await api.post<{ token: string; user: unknown }>(
-    "/auth/login/",
-    { username, password }
-  );
-  return response.data;
+export async function login(userData: Record<string, unknown>): Promise<{
+  token: string;
+  user: { id: number; username: string; email: string };
+}> {
+  const response = await api.post("/auth/login/", userData);
+
+  const { token, user_id, username, email } = response.data as {
+    token: string;
+    user_id: number;
+    username: string;
+    email: string;
+  };
+
+  return {
+    token,
+    user: {
+      id: user_id,
+      username,
+      email,
+    },
+  };
 }
 
 export async function register(
