@@ -11,6 +11,19 @@ interface ApiError {
   message?: string;
   [key: string]: unknown;
 }
+export interface DashboardStats {
+  total_items: number;
+  available_items: number;
+  total_categories: number;
+  recent_items: {
+    id: number;
+    title: string;
+    is_available: boolean;
+    category_name: string;
+    price?: number;
+    quantity: number;
+  }[];
+}
 
 // ---- Axios instance with token ----
 const api = axios.create({
@@ -172,7 +185,7 @@ export async function getMyItems<T = unknown>(): Promise<T> {
   return response.data;
 }
 
-export async function getDashboardStats<T = unknown>(): Promise<T> {
-  const response = await api.get<T>("/dashboard/stats/");
+export async function getDashboardStats(): Promise<DashboardStats> {
+  const response = await api.get<DashboardStats>("/dashboard/stats/");
   return response.data;
 }
