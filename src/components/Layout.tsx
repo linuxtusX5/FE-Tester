@@ -17,7 +17,7 @@ function Layout() {
       <nav className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-brand">
-            item Manager
+            Item Manager
           </Link>
           <div className="navbar-menu">
             <Link
@@ -25,6 +25,14 @@ function Layout() {
               className={isActive("/") ? "nav-link active" : "nav-link"}
             >
               Dashboard
+            </Link>
+            <Link
+              to="/categories"
+              className={
+                isActive("/categories") ? "nav-link active" : "nav-link"
+              }
+            >
+              Categories
             </Link>
           </div>
           <div className="navbar-user">
