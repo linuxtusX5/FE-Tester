@@ -1,6 +1,7 @@
 // api.ts
 import axios from "axios";
 import type { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import type { Category, Item } from "../types/authTypes";
 
 const API_BASE_URL = import.meta.env.VITE_PUBLIC_API_URL;
 
@@ -123,9 +124,14 @@ export async function getProfile<T = unknown>(): Promise<T> {
 }
 
 // ---- Categories ----
-export async function getCategories<T = unknown>(search = ""): Promise<T> {
-  const query = search ? `?search=${encodeURIComponent(search)}` : "";
-  const response = await api.get<T>(`/categories/${query}`);
+// export async function getCategories<T = unknown>(search = ""): Promise<T> {
+//   const query = search ? `?search=${encodeURIComponent(search)}` : "";
+//   const response = await api.get<T>(`/categories/${query}`);
+//   return response.data;
+// }
+export async function getCategories(): Promise<Category[]> {
+  const response = await api.get<Category[]>("/categories/");
+  // console.log("Categories API Response:", response.data);
   return response.data;
 }
 
@@ -149,10 +155,14 @@ export async function deleteCategory(id: number | string): Promise<void> {
 }
 
 // ---- Items ----
-export async function getItems<T = unknown>(
-  filters: Record<string, string | number | undefined> = {}
-): Promise<T> {
-  const response = await api.get<T>("/items/", { params: filters });
+// export async function getItems<T = unknown>(
+//   filters: Record<string, string | number | undefined> = {}
+// ): Promise<T> {
+//   const response = await api.get<T>("/items/", { params: filters });
+//   return response.data;
+// }
+export async function getItems(): Promise<{ filters: Item[] }> {
+  const response = await api.get<{ filters: Item[] }>("/items/");
   return response.data;
 }
 
@@ -180,8 +190,8 @@ export async function deleteItem(id: number | string): Promise<void> {
   await api.delete(`/items/${id}/`);
 }
 
-export async function getMyItems<T = unknown>(): Promise<T> {
-  const response = await api.get<T>("/my-items/");
+export async function getMyItems(): Promise<{ results: Category[] }> {
+  const response = await api.get<{ results: Category[] }>("/my-items/");
   return response.data;
 }
 

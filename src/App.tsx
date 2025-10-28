@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Layout from "./components/Layout";
 import { useAuth } from "./context/AuthContext";
 import Categories from "./pages/Categories";
+import Items from "./pages/Items";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, loading } = useAuth();
@@ -42,6 +43,7 @@ function App() {
       >
         <Route index element={<Dashboard />} />
         <Route path="categories" element={<Categories />} />
+        <Route path="items" element={<Items />} />
       </Route>
     </Routes>
   );

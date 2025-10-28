@@ -29,10 +29,25 @@ function ItemModal({ item, categories, onSave, onClose }: ItemModalProps) {
     setError("");
     setLoading(true);
 
+    // const submitData: Omit<Item, "id"> = {
+    //   title: formData.title,
+    //   description: formData.description,
+    //   category: parseInt(String(formData.category)),
+    //   price: formData.price ? parseFloat(String(formData.price)) : undefined,
+    //   quantity: parseInt(String(formData.quantity)) || 1,
+    //   is_available: formData.is_available,
+    //   tags: formData.tags
+    //     ? formData.tags
+    //         .split(",")
+    //         .map((tag) => tag.trim())
+    //         .filter(Boolean)
+    //     : [],
+    // };
+
     const submitData: Omit<Item, "id"> = {
       title: formData.title,
       description: formData.description,
-      category: parseInt(String(formData.category)),
+      category: formData.category, // ✅ Keep as string for MongoDB
       price: formData.price ? parseFloat(String(formData.price)) : undefined,
       quantity: parseInt(String(formData.quantity)) || 1,
       is_available: formData.is_available,
@@ -108,7 +123,7 @@ function ItemModal({ item, categories, onSave, onClose }: ItemModalProps) {
               <option value="">Select a category</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
-                  {cat.title}
+                  {cat.name}
                 </option>
               ))}
             </select>

@@ -27,6 +27,12 @@ function Layout() {
               Dashboard
             </Link>
             <Link
+              to="/items"
+              className={isActive("/items") ? "nav-link active" : "nav-link"}
+            >
+              Items
+            </Link>
+            <Link
               to="/categories"
               className={
                 isActive("/categories") ? "nav-link active" : "nav-link"

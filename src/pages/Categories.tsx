@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { getMyItems, getCategories, createItem } from "../services/api";
 import ItemModal from "../components/ItemModal";
 import "./Categories.css";
-import type { Category } from "../types/authTypes";
+import type { Category, Item } from "../types/authTypes";
 
 function MyItems() {
-  const [items, setItems] = useState<Category[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -20,7 +20,7 @@ function MyItems() {
   const loadCategories = async () => {
     try {
       const data = await getCategories();
-      setCategories(data.results || []);
+      setCategories(data || []);
     } catch (err) {
       console.error("Error loading categories:", err);
     }
@@ -92,7 +92,7 @@ function MyItems() {
                   </span>
                 </div>
                 <div className="item-grid-meta">
-                  <span className="item-category">{item.category_name}</span>
+                  <span className="item-category">{item.title}</span>
                 </div>
                 <div className="item-grid-footer">
                   {item.price && (

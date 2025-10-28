@@ -1,14 +1,20 @@
 import type { ReactNode } from "react";
 import { createContext, useContext, useState, useEffect } from "react";
-import { login as apiLogin, register as apiRegister } from "../services/api";
+import {
+  login as apiLogin,
+  register as apiRegister,
+  logout as apiLogout,
+} from "../services/api";
 import type { RegisterData, User, LoginData } from "../types/authTypes";
 
 interface AuthContextType {
   user: User | null;
   register: (data: RegisterData) => Promise<unknown>;
   login: (data: LoginData) => Promise<unknown>;
+  logout: () => Promise<void>;
   token: string | null;
   loading: boolean;
+  isAuthenticated: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -82,11 +88,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw new Error(errorMessage);
     }
   };
+  const logout = async () => {
+    try {
+      await apiLogout();
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Logout failed";
+      throw new Error(errorMessage);
+    }
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setToken(null);
+    setUser(null);
+  };
   const value: AuthContextType = {
     user,
     token,
     register,
     login,
+    logout,
+    isAuthenticated: !!token,
     loading,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
